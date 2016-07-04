@@ -55,18 +55,18 @@ import coerceBoolean from './utils/coerceBoolean.js'
       })
     },
     ready() {
-        for (var c in this.$parent.$children)
-        {
-            if (this.$parent.$children[c].$el == this.$el)
-            {
-                this.index= c;
-                break;
-            }
-        }
+      var children = this.$parent.$children
+      for (var i = 0; i < children.length; i++) {
+        children[i].index = i;
+      }
     },
     beforeDestroy() {
       this.$parent.renderData.splice(this.index, 1);
-    }
+      var children = this.$parent.$children;
+      for (var i = this.index + 1; i < children.length; i++) {
+        children[i].index = children[i].index - 1
+      }
+    },
   }
 </script>
 

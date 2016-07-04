@@ -28,6 +28,18 @@ import coerceBoolean from './utils/coerceBoolean.js'
         show: false
       }
     },
+    watch: {
+      "show": {
+        handler: function(newVal) {
+          var self = this, ev;
+          ev = newVal ? "tabShow" : "tabHide";
+          Vue.nextTick(function() {
+            self.$broadcast(ev, self.index)
+          });
+        },
+        immediate: true,
+      },
+    },
     computed: {
       show() {
         return (this.$parent.active == this.index);

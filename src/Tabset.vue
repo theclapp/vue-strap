@@ -48,9 +48,16 @@
       }
     },
     methods: {
-        handleTabListClick(index, el) {
-            if (!el.disabled) this.active = index
+      handleTabListClick(index, el) {
+        var self = this, ev;
+        if (!el.disabled) {
+          ev = this.active == index ? "tabReselected" : "tabSelected";
+          Vue.nextTick(function() {
+            self.$broadcast(ev, index)
+          });
+          this.active = index;
         }
+      }
     }
   }
 </script>
